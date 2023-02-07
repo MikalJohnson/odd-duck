@@ -1,0 +1,11 @@
+header {
+  display: grid;
+  background-color: aqua;
+}
+
+header > img {
+  background-color: black;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  
+}
