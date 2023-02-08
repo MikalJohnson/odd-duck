@@ -109,17 +109,25 @@ function handlePictureClick(event) {
 
 //  Render picture function
 function renderPicture() {
-  let picOne = randomGenerator();
-  let picTwo = randomGenerator();
-  let picThree = randomGenerator();
+  // let picOne = randomGenerator();
+  // let picTwo = randomGenerator();
+  // let picThree = randomGenerator();
 
-  console.log(picOne, picTwo, picThree);
+  // console.log(picOne, picTwo, picThree);
 
-  while (picOne === picTwo || picOne === picThree || picTwo === picThree) {
-    picOne = randomGenerator();
-    picTwo = randomGenerator();
-    picThree = randomGenerator();
+  while (productArray.length < 6) {
+  let randomNumber = randomGenerator();
+  if(!productArray.includes(randomNumber)) {
+    productArray.push(randomNumber)
   }
+ }
+
+ let picOne = productArray.shift();
+ let picTwo = productArray.shift();
+ let picThree = productArray.shift();
+
+
+
 
   imgOne.src = productArray[picOne].path;
   imgTwo.src = productArray[picTwo].path;
@@ -137,3 +145,26 @@ function renderPicture() {
 
 renderPicture();
 choices.addEventListener("click", handlePictureClick);
+
+//ChartJS
+
+const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
