@@ -137,3 +137,10 @@ function renderPicture() {
 
 renderPicture();
 choices.addEventListener("click", handlePictureClick);
+
+
+function pageLoad() {
+  
+  let localData = localStorage.getItem
+  
+}
