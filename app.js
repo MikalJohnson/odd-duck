@@ -13,6 +13,7 @@ let clickCount = 0;
 let clickAllowed = 25;
 // When the click count = click allowed the game will end.
 let productArray = [];
+let newList = [];
 
 // Create a constructor function:
 //  1. Name
@@ -86,6 +87,7 @@ function renderResults() {
     li.textContent = `${productArray[i].name} ${productArray[i].path} ${productArray[i].timesClicked}`;
     resultsList.appendChild(li);
   }
+  renderChart()
 }
 
 // event handler for click in the choices section
@@ -109,17 +111,21 @@ function handlePictureClick(event) {
 
 //  Render picture function
 function renderPicture() {
-  let picOne = randomGenerator();
-  let picTwo = randomGenerator();
-  let picThree = randomGenerator();
 
-  console.log(picOne, picTwo, picThree);
 
-  while (picOne === picTwo || picOne === picThree || picTwo === picThree) {
-    picOne = randomGenerator();
-    picTwo = randomGenerator();
-    picThree = randomGenerator();
+
+  while (newList.length < 6) {
+    let randomNumber = randomGenerator();
+    if(!newList.includes(randomNumber)) {
+      newList.push(randomNumber)
+      console.log(newList)
+    }
   }
+
+  let picOne = newList.shift();
+  let picTwo = newList.shift();
+  let picThree = newList.shift();
+
 
   imgOne.src = productArray[picOne].path;
   imgTwo.src = productArray[picTwo].path;
@@ -137,3 +143,44 @@ function renderPicture() {
 
 renderPicture();
 choices.addEventListener("click", handlePictureClick);
+
+//ChartJS
+
+function renderChart() {
+  let pictureName = []
+  let pictureViews = []
+  let pictureClick = []
+
+  for(let i = 0; i < productArray.length; i++) {
+    pictureName.push(productArray[i].name);
+    pictureViews.push(productArray[i].views);
+    pictureClick.push(productArray[i].timesClicked)
+  }
+}
+
+const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Views',
+        data: pictureViews,
+        borderWidth: 1
+      },
+      {
+        label:'# of Clicks',
+        data: pictureClick,
+        borderWidth: 1
+      }
+    ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
