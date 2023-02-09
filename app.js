@@ -13,6 +13,7 @@ let clickCount = 0;
 let clickAllowed = 25;
 // When the click count = click allowed the game will end.
 let productArray = [];
+let newList = [];
 
 // Create a constructor function:
 //  1. Name
@@ -86,6 +87,7 @@ function renderResults() {
     li.textContent = `${productArray[i].name} ${productArray[i].path} ${productArray[i].timesClicked}`;
     resultsList.appendChild(li);
   }
+  renderChart()
 }
 
 // event handler for click in the choices section
@@ -109,26 +111,20 @@ function handlePictureClick(event) {
 
 //  Render picture function
 function renderPicture() {
-  // let picOne = randomGenerator();
-  // let picTwo = randomGenerator();
-  // let picThree = randomGenerator();
 
-  let picOne = productArray.shift();
-  let picTwo = productArray.shift();
-  let picThree = productArray.shift();
 
-console.log(picOne, picTwo, picThree);
 
-  while (productArray.length < 6) {
-  let randomNumber = randomGenerator();
-  if(!productArray.includes(randomNumber)) {
-    productArray.push(randomNumber)
+  while (newList.length < 6) {
+    let randomNumber = randomGenerator();
+    if(!newList.includes(randomNumber)) {
+      newList.push(randomNumber)
+      console.log(newList)
+    }
   }
- }
 
-
-
-
+  let picOne = newList.shift();
+  let picTwo = newList.shift();
+  let picThree = newList.shift();
 
 
   imgOne.src = productArray[picOne].path;
@@ -160,8 +156,6 @@ function renderChart() {
     pictureViews.push(productArray[i].views);
     pictureClick.push(productArray[i].timesClicked)
   }
-  console.log(pictureClick);
-  console.log(pictureViews);
 }
 
 const ctx = document.getElementById('myChart');
